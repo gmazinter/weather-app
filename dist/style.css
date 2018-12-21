@@ -1,0 +1,77 @@
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+body {
+    margin: 0;
+    display: grid;
+    grid-template-rows: 25px;
+    grid-template-areas:
+    "sb"
+    "mc"; 
+}
+#searchBar {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-area: sb;
+    /* border: 1px solid black; */
+}
+#searchInput {
+    font-family: Arial, Helvetica, sans-serif;
+}
+#mainContainer {
+    display: grid;
+    gap: 10px;
+    grid-area: mc;
+    /* border: 1px solid black; */
+}
+.weatherCard {
+    display: grid;
+    padding-left: 5px;
+    grid-template-rows: 3fr 2fr 2fr;
+    grid-template-columns: 3fr 11fr 6fr 8fr;
+    grid-template-areas: 
+    "a a c d"
+    "b b c d"
+    "f g h e";
+    background-color: rgb(253, 249, 245);
+}
+.cityName {
+    display: grid;
+    grid-area: a;
+    font-size: 8vw;
+}
+.cityDate {
+    display: grid;
+    grid-area: b;
+    font-size: 4vw;
+    align-self: start;
+}
+.cityTemp {
+    display: grid;
+    grid-area: c;
+    justify-self: end;
+    align-self: center;
+    font-size: 9vw;
+}
+.cityPic {
+    display: grid;
+    grid-area: d;
+    justify-self: center;
+    align-self: center;
+    /* width: 25vw; */
+}
+.cityCond {
+    display: grid;
+    grid-area: e;
+    justify-self: center;
+    align-self: start;
+    /* padding-right: 20px; */
+}
+.saveButton {
+    display: grid;
+    grid-area: f;
+}
+.removeButton {
+    display: grid;
+    grid-area: g;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div id="searchBar">
+        <input id="searchInput" type="text" placeholder="enter a city name">
+        <button id="searchButton">search</button>
+    </div>
+    <div id="mainContainer"></div>
+    
+    <script id="weatherCardTemplate" type="text/x-handlebars-template">
+        {{#each cityArray}}
+            <div class="weatherCard" data-id="id">
+                <div class="cityName">{{name}}</div>
+                <div class="cityDate">{{date}}</div>
+                <div class="cityTemp">{{temperature}}&#176</div>
+                <div class="cityCond">{{condition}}</div>
+                <img class="cityPic" src="{{conditionPic}}">
+                <!-- <div >save city</div>
+                <div >remove city</div> -->
+                <div class="switch"></div>
+                <span class="saveButton" style="color: rgb(150, 150, 150)"><i class="fas fa-plus"></i></span>
+                <span class="removeButton" style="color: rgb(150, 150, 150)"><i class="fas fa-minus"></i></i></span>
+            </div>
+        {{/each}}
+    </script>
+
+    <script src="./jquery/dist/jquery.js"></script>
+    <script src="./handlebars/dist/handlebars.js"></script>
+    <script src="Renderer.js"></script>
+    <script src="TempManager.js"></script>
+    <script src="main.js"></script>
+</body> 
+</html>
