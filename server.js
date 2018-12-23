@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const api = require('./server/routes/api')
 const request = require('request')
 const mongoose = require('mongoose')
-// const City = require('./server/model/City')
+
 
 mongoose.connect('mongodb://localhost/weatherDB', {useNewUrlParser: true})
 

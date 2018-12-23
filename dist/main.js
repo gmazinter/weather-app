@@ -3,7 +3,13 @@ const renderer = new Renderer()
 
 async function loadPage() {
     await tempmanager.getDataFromDB()
-    // console.log(tempmanager.cityData)
+    let now = moment()
+    // tempmanager.cityData.forEach(c => {
+    //     if (now - moment(c.date) >= 600000) { //gte 10 mins
+    //         console.log(`updating ${c.name}'s data`)
+    //         tempmanager.updateCity(c.name)
+    //     }
+    })
     renderer.renderData(tempmanager.cityData)
 }
 
@@ -24,9 +30,13 @@ $("#mainContainer").on("click", ".saveButton", function() {
 
 $("#mainContainer").on("click", ".removeButton", function() {
     const cityName = $(this).siblings(".cityName").text()
-    console.log(cityName)
     tempmanager.removeCity(cityName)
-    // console.log(tempmanager.cityData)
+    renderer.renderData(tempmanager.cityData)
+})
+
+$("#mainContainer").on("click", ".updateButton", async function() {
+    const cityName = $(this).siblings(".cityName").text()
+    await tempmanager.updateCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })
 

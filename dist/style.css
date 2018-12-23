@@ -28,11 +28,11 @@ body {
     display: grid;
     padding-left: 5px;
     grid-template-rows: 3fr 2fr 2fr;
-    grid-template-columns: 3fr 11fr 6fr 8fr;
+    grid-template-columns: 3fr 3fr 8fr 6fr 8fr;
     grid-template-areas: 
-    "a a c d"
-    "b b c d"
-    "f g h e";
+    "a a a c d"
+    "b b b c d"
+    "f g h e e";
     background-color: rgb(253, 249, 245);
 }
 .cityName {
@@ -69,9 +69,16 @@ body {
 }
 .saveButton {
     display: grid;
+    align-self: center;
     grid-area: f;
 }
 .removeButton {
     display: grid;
+    align-self: center;
     grid-area: g;
+}
+.updateButton {
+    display: grid;
+    align-self: center;
+    grid-area: h;
 }

@@ -19,8 +19,6 @@ class TempManager {
             conditionPic: data.cityCondIcon
         }
         this.cityData.push(data)
-        // console.log(this.cityData)
-
     }
 
     saveCity(cityName) {
@@ -41,5 +39,29 @@ class TempManager {
 
         let i = this.cityData.findIndex(c => cityName === c.name)
         this.cityData.splice(i,1)
+    }
+
+    async updateCity(cityName) {
+        let data = await $.ajax({
+            method: 'PUT',
+            url: `city/:${cityName}`,
+            // success: function(data) {
+                // let i = this.cityData.findIndex(c => c.name === data.name)
+                // this.cityData.splice(i, 1, data)
+            // },
+            error: function (xhr, text, error) {
+                console.log(error)
+            }
+        })
+        // console.log(data)
+        data = {
+            name: data.cityName,
+            date: data.cityDate,
+            temperature: data.cityTemp,
+            condition: data.cityCond,
+            conditionPic: data.cityCondIcon
+        }
+        let i = this.cityData.findIndex(c => c.name === data.name)
+        this.cityData.splice(i, 1, data)
     }
 }

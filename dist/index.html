@@ -25,15 +25,14 @@
                 <div class="cityTemp">{{temperature}}&#176</div>
                 <div class="cityCond">{{condition}}</div>
                 <img class="cityPic" src="{{conditionPic}}">
-                <!-- <div >save city</div>
-                <div >remove city</div> -->
-                <div class="switch"></div>
                 <span class="saveButton" style="color: rgb(150, 150, 150)"><i class="fas fa-plus"></i></span>
-                <span class="removeButton" style="color: rgb(150, 150, 150)"><i class="fas fa-minus"></i></i></span>
+                <span class="removeButton" style="color: rgb(150, 150, 150)"><i class="fas fa-minus"></i></span>
+                <span class="updateButton" style="color: rgb(150, 150, 150)"><i class="fas fa-sync-alt"></i></span>
             </div>
         {{/each}}
     </script>
 
+    <script src="./moment/moment.js"></script>
     <script src="./jquery/dist/jquery.js"></script>
     <script src="./handlebars/dist/handlebars.js"></script>
     <script src="Renderer.js"></script>

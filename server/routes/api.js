@@ -52,5 +52,25 @@ router.delete('/city/:cityName', function(req, res) {
         res.end()
 })
 
+router.put(`/city/:cityName`, function(req, res) {
+    request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`, function(err, data) {
+        // console.log(JSON.parse(data.body))
+        data = JSON.parse(data.body)
+        data = {
+            cityName: data.location.name,
+            cityDate: data.current.last_updated,
+            cityTemp: data.current.temp_c,
+            cityCond: data.current.condition.text,
+            cityCondIcon: data.current.condition.icon
+        }
+        City.findOneAndUpdate({name: data.cityName}, {
+            date: data.cityDate,
+            temperature: data.cityTemp,
+            condition: data.cityCond,
+            conditionPic: data.cityCondIcon
+        }, function(err) {null})
+        res.send(data)
+    })
+})
 
 module.exports = router
