@@ -9,7 +9,6 @@ async function loadPage() {
     //         console.log(`updating ${c.name}'s data`)
     //         tempmanager.updateCity(c.name)
     //     }
-    })
     renderer.renderData(tempmanager.cityData)
 }
 

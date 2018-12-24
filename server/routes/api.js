@@ -12,7 +12,6 @@ router.get(`/sanity`, function(req, res) {
 
 router.get('/city/:cityName', function(req, res) {  
     request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`, function(err, data) {
-        // console.log(JSON.parse(data.body))
         data = JSON.parse(data.body)
         data = {
             cityName: data.location.name,
@@ -21,14 +20,15 @@ router.get('/city/:cityName', function(req, res) {
             cityCond: data.current.condition.text,
             cityCondIcon: data.current.condition.icon
         }
+        console.log(err || null)
         res.send(data)
     })
 })
 
 router.get('/cities', function(req, res) {
     City.find({}, function(err, cities) {
-        // console.log(cities)
         res.send(cities)
+        //should handle error somehow
     })
 })
 
@@ -42,9 +42,7 @@ router.post('/city', function(req, res) {
     // })
     let newCity = new City(req.body)
     newCity.save()
-    // console.log(`Updated database successfuly with:\n ${newCity}`)
     res.end()
-    // res.send(`Updated database successfuly with:\n ${newCity}`)
 })
 
 router.delete('/city/:cityName', function(req, res) {
@@ -54,7 +52,6 @@ router.delete('/city/:cityName', function(req, res) {
 
 router.put(`/city/:cityName`, function(req, res) {
     request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`, function(err, data) {
-        // console.log(JSON.parse(data.body))
         data = JSON.parse(data.body)
         data = {
             cityName: data.location.name,

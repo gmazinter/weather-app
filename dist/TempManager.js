@@ -52,8 +52,7 @@ class TempManager {
             error: function (xhr, text, error) {
                 console.log(error)
             }
-        })
-        // console.log(data)
+        })  
         data = {
             name: data.cityName,
             date: data.cityDate,
