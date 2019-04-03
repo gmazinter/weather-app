@@ -1,66 +1,41 @@
-
 class TempManager {
     constructor() {
         this.cityData = []
     }
 
     async getDataFromDB() {
-        let data = await $.get(`/cities`)
-        this.cityData = data
+        const response = await $.get('/cities')
+        this.cityData = response
+        console.log(this.cityData)
     }
 
     async getCityData(cityName) {
-        let data = await $.get(`/city/${cityName}`)
-        data = {
-            name: data.cityName,
-            date: data.cityDate,
-            temperature: data.cityTemp,
-            condition: data.cityCond,
-            conditionPic: data.cityCondIcon
+        const response = await $.get(`/city/${cityName}`)
+        const cityObject = {
+            name: response.location.name,
+            updated: response.current.last_updated,
+            temp: response.current.temp_c,
+            condition: response.current.condition.text,
+            conditionIcon: response.current.condition.icon
         }
-        this.cityData.push(data)
+        this.cityData.push(cityObject)
     }
 
     saveCity(cityName) {
-        let cityToSave = this.cityData.find(c => c.name === cityName)
-        // console.log(cityToSave)
-        $.post(`/city`, cityToSave, function() {})
+        const cityToSave = this.cityData.find(c => c.name === cityName)
+        $.post(`/city`, cityToSave)
     }
 
     removeCity(cityName) {
-        $.ajax({
+        $.ajax(`city/${cityName}`, {
             method: 'DELETE',
-            url:`city/${cityName}`,
-            success: function() {},
-            error: function (xhr, text, error) {
-                console.log(text)
-            }
+            error: function (xhr, err, except) {console.log(err)}
         })
-
-        let i = this.cityData.findIndex(c => cityName === c.name)
-        this.cityData.splice(i,1)
+        this.cityData.splice(this.cityData.findIndex(c => c.name === cityName), 1)
     }
 
-    async updateCity(cityName) {
-        let data = await $.ajax({
-            method: 'PUT',
-            url: `city/:${cityName}`,
-            // success: function(data) {
-                // let i = this.cityData.findIndex(c => c.name === data.name)
-                // this.cityData.splice(i, 1, data)
-            // },
-            error: function (xhr, text, error) {
-                console.log(error)
-            }
-        })  
-        data = {
-            name: data.cityName,
-            date: data.cityDate,
-            temperature: data.cityTemp,
-            condition: data.cityCond,
-            conditionPic: data.cityCondIcon
-        }
-        let i = this.cityData.findIndex(c => c.name === data.name)
-        this.cityData.splice(i, 1, data)
+    refreshCity(cityName) {
+        const lastUpdatedString = this.cityData.find(c => c.name === cityName).updated
+        console.log(lastUpdatedString)
     }
 }

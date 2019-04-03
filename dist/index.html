@@ -15,28 +15,27 @@
         <input id="searchInput" type="text" placeholder="enter a city name">
         <button id="searchButton">search</button>
     </div>
-    <div id="mainContainer"></div>
+    <div id="weather-list"></div>
     
     <script id="weatherCardTemplate" type="text/x-handlebars-template">
-        {{#each cityArray}}
+        {{#each cities}}
             <div class="weatherCard" data-id="id">
                 <div class="cityName">{{name}}</div>
                 <div class="cityDate">{{date}}</div>
                 <div class="cityTemp">{{temperature}}&#176</div>
                 <div class="cityCond">{{condition}}</div>
-                <img class="cityPic" src="{{conditionPic}}">
+                <img class="cityPic" src={{conditionIcon}}>
                 <span class="saveButton" style="color: rgb(150, 150, 150)"><i class="fas fa-plus"></i></span>
                 <span class="removeButton" style="color: rgb(150, 150, 150)"><i class="fas fa-minus"></i></span>
-                <span class="updateButton" style="color: rgb(150, 150, 150)"><i class="fas fa-sync-alt"></i></span>
+                <span class="refreshButton" style="color: rgb(150, 150, 150)"><i class="fas fa-sync-alt"></i></span>
             </div>
         {{/each}}
     </script>
 
-    <script src="./moment/moment.js"></script>
-    <script src="./jquery/dist/jquery.js"></script>
     <script src="./handlebars/dist/handlebars.js"></script>
-    <script src="Renderer.js"></script>
+    <script src="./jquery/dist/jquery.js"></script>
     <script src="TempManager.js"></script>
+    <script src="Renderer.js"></script>
     <script src="main.js"></script>
 </body> 
 </html>

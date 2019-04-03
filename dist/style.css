@@ -18,7 +18,7 @@ body {
 #searchInput {
     font-family: Arial, Helvetica, sans-serif;
 }
-#mainContainer {
+#weather-list {
     display: grid;
     gap: 10px;
     grid-area: mc;

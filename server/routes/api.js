@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const request = require('request')
 const mongoose = require('mongoose')
+
 const City = require('../model/City')
 
 router.get(`/sanity`, function(req, res) {
@@ -11,63 +12,28 @@ router.get(`/sanity`, function(req, res) {
 })
 
 router.get('/city/:cityName', function(req, res) {  
-    request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`, function(err, data) {
-        data = JSON.parse(data.body)
-        data = {
-            cityName: data.location.name,
-            cityDate: data.current.last_updated,
-            cityTemp: data.current.temp_c,
-            cityCond: data.current.condition.text,
-            cityCondIcon: data.current.condition.icon
-        }
-        console.log(err || null)
-        res.send(data)
-    })
+    request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`,
+        function(err, data) {
+            data = JSON.parse(data.body)
+            res.send(data)
+        })
 })
 
 router.get('/cities', function(req, res) {
     City.find({}, function(err, cities) {
         res.send(cities)
-        //should handle error somehow
     })
 })
 
-router.post('/city', function(req, res) {
-    // let newCity = new City({
-    //     name: req.body.name,
-    //     date: req.body.updated,
-    //     temperature: req.body.temp,
-    //     condition: req.body.condition
-    //     conditionIcon: req.body.conditionIcon
-    // })
-    let newCity = new City(req.body)
-    newCity.save()
+router.post('/city', async function(req, res) {
+    const newCity = new City(req.body)
+    await newCity.save()
     res.end()
 })
 
-router.delete('/city/:cityName', function(req, res) {
-    City.deleteOne({name: req.params.cityName}, function(err){})
-        res.end()
-})
-
-router.put(`/city/:cityName`, function(req, res) {
-    request(`http://api.apixu.com/v1/current.json?key=${APIKey}&q=${req.params.cityName}`, function(err, data) {
-        data = JSON.parse(data.body)
-        data = {
-            cityName: data.location.name,
-            cityDate: data.current.last_updated,
-            cityTemp: data.current.temp_c,
-            cityCond: data.current.condition.text,
-            cityCondIcon: data.current.condition.icon
-        }
-        City.findOneAndUpdate({name: data.cityName}, {
-            date: data.cityDate,
-            temperature: data.cityTemp,
-            condition: data.cityCond,
-            conditionPic: data.cityCondIcon
-        }, function(err) {null})
-        res.send(data)
-    })
+router.delete('/city/:cityName', async function(req, res) {
+    await City.deleteOne({name: req.params.cityName})
+    res.end()
 })
 
 module.exports = router

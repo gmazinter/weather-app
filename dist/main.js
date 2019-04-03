@@ -3,14 +3,10 @@ const renderer = new Renderer()
 
 async function loadPage() {
     await tempmanager.getDataFromDB()
-    let now = moment()
-    // tempmanager.cityData.forEach(c => {
-    //     if (now - moment(c.date) >= 600000) { //gte 10 mins
-    //         console.log(`updating ${c.name}'s data`)
-    //         tempmanager.updateCity(c.name)
-    //     }
     renderer.renderData(tempmanager.cityData)
 }
+
+loadPage() 
 
 async function handleSearch(cityInput) {
     await tempmanager.getCityData(cityInput)
@@ -22,21 +18,19 @@ $("#searchButton").on("click", function() {
     handleSearch(cityInput)
 })
 
-$("#mainContainer").on("click", ".saveButton", function() {
-    const cityName = $(this).siblings("div").first().text()
+$("#weather-list").on("click", ".saveButton", function() {
+    const cityName = $(this).siblings(".cityName").text()
     tempmanager.saveCity(cityName)
 })
 
-$("#mainContainer").on("click", ".removeButton", function() {
+$("#weather-list").on("click", ".removeButton", function() {
     const cityName = $(this).siblings(".cityName").text()
     tempmanager.removeCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })
 
-$("#mainContainer").on("click", ".updateButton", async function() {
+$("#weather-list").on("click", ".refreshButton", function() {
     const cityName = $(this).siblings(".cityName").text()
-    await tempmanager.updateCity(cityName)
+    tempmanager.refreshCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })
-
-loadPage()
