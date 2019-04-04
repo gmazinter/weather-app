@@ -1,6 +1,6 @@
 class TempManager {
     constructor() {
-        this.cityData = []
+        this.cityData = {}
     }
 
     async getDataFromDB() {
@@ -18,12 +18,12 @@ class TempManager {
             condition: response.current.condition.text,
             conditionIcon: response.current.condition.icon
         }
-        this.cityData.push(cityObject)
+        this.cityData[cityObject.name] = cityObject
     }
 
     saveCity(cityName) {
-        const cityToSave = this.cityData.find(c => c.name === cityName)
-        $.post(`/city`, cityToSave)
+        // console.log(cityName)
+        $.post(`/city`, this.cityData[cityName])
     }
 
     removeCity(cityName) {
@@ -31,7 +31,7 @@ class TempManager {
             method: 'DELETE',
             error: function (xhr, err, except) {console.log(err)}
         })
-        this.cityData.splice(this.cityData.findIndex(c => c.name === cityName), 1)
+        delete this.cityData[cityName]
     }
 
     refreshCity(cityName) {

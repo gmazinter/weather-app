@@ -31,6 +31,6 @@ $("#weather-list").on("click", ".removeButton", function() {
 
 $("#weather-list").on("click", ".refreshButton", function() {
     const cityName = $(this).siblings(".cityName").text()
-    tempmanager.refreshCity(cityName)
+    tempmanager.getCityData(cityName)
     renderer.renderData(tempmanager.cityData)
 })
