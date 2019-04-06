@@ -6,16 +6,12 @@ async function loadPage() {
     renderer.renderData(tempmanager.cityData)
 }
 
-loadPage() 
+loadPage()
 
-async function handleSearch(cityInput) {
+$("#searchButton").on("click", async function() {
+    const cityInput = $("#searchInput").val()
     await tempmanager.getCityData(cityInput)
     renderer.renderData(tempmanager.cityData)
-}
-
-$("#searchButton").on("click", function() {
-    const cityInput = $("#searchInput").val()
-    handleSearch(cityInput)
 })
 
 $("#weather-list").on("click", ".saveButton", function() {
@@ -23,14 +19,15 @@ $("#weather-list").on("click", ".saveButton", function() {
     tempmanager.saveCity(cityName)
 })
 
-$("#weather-list").on("click", ".removeButton", function() {
+$("#weather-list").on("click", ".removeButton", async function() {
     const cityName = $(this).siblings(".cityName").text()
-    tempmanager.removeCity(cityName)
+    await tempmanager.removeCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })
 
-$("#weather-list").on("click", ".refreshButton", function() {
+$("#weather-list").on("click", ".refreshButton", async function() {
     const cityName = $(this).siblings(".cityName").text()
-    tempmanager.getCityData(cityName)
+    await tempmanager.getCityData(cityName)
+    tempmanager.saveCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })

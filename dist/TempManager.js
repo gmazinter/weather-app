@@ -22,7 +22,6 @@ class TempManager {
     }
 
     saveCity(cityName) {
-        // console.log(cityName)
         $.post(`/city`, this.cityData[cityName])
     }
 

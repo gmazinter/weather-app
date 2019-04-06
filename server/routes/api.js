@@ -22,7 +22,6 @@ router.get('/city/:cityName', function(req, res) {
 })
 
 router.post('/city', async function(req, res) {
-    console.log(req.body)
     const newCity = new City(req.body)
     await newCity.save()
     res.end()
