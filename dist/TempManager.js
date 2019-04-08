@@ -6,7 +6,6 @@ class TempManager {
     async getDataFromDB() {
         const response = await $.get('/cities')
         this.cityData = response
-        console.log(this.cityData)
     }
 
     async getCityData(cityName) {
@@ -25,7 +24,15 @@ class TempManager {
         $.post(`/city`, this.cityData[cityName])
     }
 
-    removeCity(cityName) {
+    updateCity(cityName) {
+        $.ajax(`city/${cityName}`, {
+            data: this.cityData[cityName],
+            method: 'PUT',
+            error: function (xhr, err, except) {console.log(err)}
+        })
+    }
+
+    async removeCity(cityName) {
         $.ajax(`city/${cityName}`, {
             method: 'DELETE',
             error: function (xhr, err, except) {console.log(err)}
@@ -33,8 +40,15 @@ class TempManager {
         delete this.cityData[cityName]
     }
 
-    refreshCity(cityName) {
-        const lastUpdatedString = this.cityData.find(c => c.name === cityName).updated
-        console.log(lastUpdatedString)
+    async refreshCity(cityName) {
+        await this.getCityData(cityName)
+        this.updateCity(cityName)
+    }
+
+    async refreshAll() {
+        const cityArray = Object.values(this.cityData)
+        for (let city of cityArray) {
+            await this.refreshCity(city.name)
+        }
     }
 }

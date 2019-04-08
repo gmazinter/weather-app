@@ -27,6 +27,13 @@ router.post('/city', async function(req, res) {
     res.end()
 })
 
+router.put('/city/:cityName', async function(req, res) {
+    const city = new City(req.body)
+    City.findOneAndDelete({ name: city.name })
+        .then(() => city.save())
+        .then(() => res.end())
+})
+
 router.delete('/city/:cityName', async function(req, res) {
     await City.deleteOne({name: req.params.cityName})
     res.end()
