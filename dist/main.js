@@ -23,7 +23,6 @@ $("#weather-list").on("click", ".saveButton", function() {
 
 $("#weather-list").on("click", ".removeButton", async function() {
     const cityName = $(this).siblings(".cityName").text()
-    console.log('event triggered')
     await tempmanager.removeCity(cityName)
     renderer.renderData(tempmanager.cityData)
 })

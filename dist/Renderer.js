@@ -1,7 +1,7 @@
 class Renderer {
 
     renderData(cities) {
-        console.log('rendering')
+        console.log(`rendering at ${window.performance.now()} ms`)
         $("#weather-list").empty()
         const source = $("#weatherCardTemplate").html()
         const template = Handlebars.compile(source)

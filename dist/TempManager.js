@@ -46,9 +46,7 @@ class TempManager {
     }
 
     async refreshAll() {
-        const cityArray = Object.values(this.cityData)
-        for (let city of cityArray) {
-            await this.refreshCity(city.name)
-        }
+        let promises = Object.values(this.cityData).map((city) => this.refreshCity(city.name))
+        await Promise.all(promises) 
     }
 }
